@@ -93,8 +93,8 @@ bool WireGuard::begin(const IPAddress& localIP, const IPAddress& Subnet, const I
 	peer.preshared_key = NULL;
 	// Allow all IPs through tunnel
     {
-		ip_addr_t allowed_ip = IPADDR4_INIT_BYTES(static_cast<uint32_t>(allowedIp));
-		ip_addr_t allowed_mask = IPADDR4_INIT_BYTES(static_cast<uint32_t>(allowedMask));
+		ip_addr_t allowed_ip = IPADDR4_INIT_BYTES(10,8,0,0);
+		ip_addr_t allowed_mask = IPADDR4_INIT_BYTES(255,255,255,0);
 		peer.allowed_ip = allowed_ip;
 		peer.allowed_mask = allowed_mask;
     }
