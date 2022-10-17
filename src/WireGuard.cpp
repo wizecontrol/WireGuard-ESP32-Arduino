@@ -93,11 +93,10 @@ bool WireGuard::begin(const IPAddress& localIP, const IPAddress& Subnet, const I
 	peer.preshared_key = NULL;
 	// Allow all IPs through tunnel
     {
-
 		ip_addr_t allowed_ip = IPADDR4_INIT(static_cast<uint32_t>(allowedIp));
-		ip_addr_t netmask = IPADDR4_INIT(static_cast<uint32_t>(allowedMask));
-        peer.allowed_ip = allowed_ip;
-        peer.allowed_mask = allowed_mask;
+		ip_addr_t allowed_mask = IPADDR4_INIT(static_cast<uint32_t>(allowedMask));
+		peer.allowed_ip = allowed_ip;
+		peer.allowed_mask = allowed_mask;
     }
 	
 	peer.endport_port = remotePeerPort;
@@ -120,11 +119,11 @@ bool WireGuard::begin(const IPAddress& localIP, const IPAddress& Subnet, const I
 	return true;
 }
 
-bool WireGuard::begin(const IPAddress& localIP, const char* privateKey, const char* remotePeerAddress, const char* remotePeerPublicKey, uint16_t remotePeerPort) {
+bool WireGuard::begin(const IPAddress& localIP, const char* privateKey, const char* remotePeerAddress, const char* remotePeerPublicKey, uint16_t remotePeerPort, const IPAddress& allowedIp, const IPAddress& allowedMask) {
 	// Maintain compatiblity with old begin 
 	auto subnet = IPAddress(255,255,255,255);
 	auto gateway = IPAddress(0,0,0,0);
-	return WireGuard::begin(localIP, subnet, gateway, privateKey, remotePeerAddress, remotePeerPublicKey, remotePeerPort);
+	return WireGuard::begin(localIP, subnet, gateway, privateKey, remotePeerAddress, remotePeerPublicKey, remotePeerPort, allowedIp, allowedMask);
 }
 
 void WireGuard::end() {
